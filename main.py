@@ -28,6 +28,10 @@ def main() -> None:
         raise SystemExit("entry is only whitespace")
     if "\n" in text or "\r" in text:
         raise SystemExit("entry must be a single line")
+    if any(ord(ch) < 32 for ch in text):
+        raise SystemExit("entry must not contain control characters")
+    if text != text.strip():
+        raise SystemExit("entry must not start or end with whitespace")
 
     out_dir = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
     os.makedirs(out_dir, exist_ok=True)
